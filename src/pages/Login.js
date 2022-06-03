@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { ImageBackground, StyleSheet,Text, View, Image,Button } from "react-native";
+import { Checkbox } from 'react-native-paper';
+import { ImageBackground, StyleSheet,Text, View, Image,Button,Alert,ScrollView} from "react-native";
 import CaixaText from "../components/CaixaText";
+
+import * as loginService from '../services/LoginService'
 
 const backgroundimg = "../images/fundo.png";
 const logo = "../images/logo.png";
@@ -8,21 +11,30 @@ const logo = "../images/logo.png";
 
 export default function Login(props) {
 
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
+  const [checked, setChecked] = useState(false);
 
   const navigation = props.navigation
 
-  const validaLogin = () => {
-    if(username == "Admin" && password == "admin"){
+  // const efetuarLogin = async() => {
+  //   try {
+  //       let user = await loginService.login(email, senha)
+  //       navigation.replace("Home")
+  //   } catch (error) {
+  //       Alert.alert("Erro ao efetuar Loging", error)
+  // }}
+
+  const efetuarLogin = () => {
+    if(email == "" && senha == ""){
       navigation.replace("Home")
     } else {
       Alert.alert("Usuario ou senha invalido!")
     }
-    }
+ }
 
   const pageCadastro = () => {
-    navigation.push("Cadastro")
+    navigation.replace("Cadastro")
   }
 
 
@@ -30,29 +42,44 @@ export default function Login(props) {
     <View style={styles.container}>
       <ImageBackground source={require(backgroundimg)} resizeMode="cover" style={styles.image}>
           
-
+      <ScrollView> 
         <View style={styles.linha}>
         <Image source={require(logo)} style={styles.logo}/>
 
+        
           <View style={{marginTop:40}}>
             <CaixaText 
-              value={username}
-              set = {setUsername}
-              place = "Username"
+              value={email}
+              set = {setEmail}
+              place = "Email"
+              teclakey='email-address'
             />
             <CaixaText 
-              value={password}
-              set = {setPassword}
+              value={senha}
+              set = {setSenha}
               place = "Password"
               security={true}
             />
-          </View>
+            
+            <View style={styles.checkboxTheme}>
+              <Checkbox
+              status={checked ? 'checked' : 'unchecked'}
+              onPress={() => {
+                setChecked(!checked);
+              }}
+              />
+              <Text style={{fontSize: 15,color: "white",textAlign: "left",fontWeight: "bold"}}> Lembre-me</Text>
+            </View>
 
-        <View style={{backgroundColor: 'white',minWidth: 300, borderRadius: 10, marginHorizontal: 30 , margin:30}}>
+
+          </View>
+        
+
+        <View style={{backgroundColor: 'white',minWidth: 300, borderRadius: 10, marginTop: 35 , margin:30}}>
           <Button
           title='Entrar'
           color='#262626'
-          onPress={validaLogin}
+          onPress={efetuarLogin}
           />
         </View>
 
@@ -66,7 +93,7 @@ export default function Login(props) {
         </View>
          
         </View>
-        
+        </ScrollView> 
 
       </ImageBackground>
     </View>
@@ -87,7 +114,7 @@ const styles = StyleSheet.create({
       },
       linha:{
         marginTop: 60,
-        flexDirection: "colunm",
+        flexDirection: "column",
         // backgroundColor: '#262626',
         alignItems: 'center',
       },
@@ -98,13 +125,19 @@ const styles = StyleSheet.create({
         alignContent: "flex-start",
     },
     boxCadastro:{
-      marginTop: 60,
+      marginTop: 50,
 
     },
     textocadastro:{
       fontSize: 15,
       color: "white",
-      marginHorizontal:30,
+      marginHorizontal:30
+    },
+    checkboxTheme:{
+     marginLeft:30, 
+     width:100, 
+     flexDirection: "row",
+     alignItems: 'center'
     }
   });
   
