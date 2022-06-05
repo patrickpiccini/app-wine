@@ -12,6 +12,7 @@ import Harmonizacao from './src/pages/Harmonizacao';
 import Mapa from './src/pages/Mapa';
 import Sobre from './src/pages/Sobre';
 import Faq from './src/pages/Faq';
+import AddVinho from './src/pages/AddVinho';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +27,7 @@ LogBox.ignoreLogs([
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='Login'
+      <Stack.Navigator initialRouteName='login'
       screenOptions={{ 
         headerTintColor:"white", 
         headerStyle:{backgroundColor: '#8A0B14'}}}
@@ -99,6 +100,15 @@ function App() {
         component={Faq} 
         options={{
           title:"FAQ",
+          headerTitleAlign:'center'
+        }}
+        />   
+
+        <Stack.Screen 
+        name="AddVinho" 
+        component={AddVinho} 
+        options={{
+          title:"Cadstro Vinho",
           headerTitleAlign:'center'
         }}
         />   

@@ -47,22 +47,22 @@ export default function Login(props) {
 }
 
 {/* ------FUNÇÃO PARA LOGAR ATRAVÉZ DO FIREBASE------- */} 
-  const efetuarLogin = async() => {
-    try {
-        let user = await loginService.login(email, senha)
-        navigation.replace("Home")
-    } catch (error) {
-        Alert.alert("Erro ao efetuar Loging", error)
-  }}
+  // const efetuarLogin = async() => {
+  //   try {
+  //       let user = await loginService.login(email, senha)
+  //       navigation.replace("Home")
+  //   } catch (error) {
+  //       Alert.alert("Erro ao efetuar Loging", error)
+  // }}
 
 {/* ------LOGIN TEMPORARIO------- */} 
-//   const efetuarLogin = () => {
-//     if(email == "" && senha == ""){
-//       navigation.replace("Home")
-//     } else {
-//       Alert.alert("Usuario ou senha invalido!")
-//     }
-//  }
+  const efetuarLogin = () => {
+    if(email == "" && senha == ""){
+      navigation.replace("Home")
+    } else {
+      Alert.alert("Usuario ou senha invalido!")
+    }
+ }
 
   const pageCadastro = () => {
     navigation.push("Cadastro")
