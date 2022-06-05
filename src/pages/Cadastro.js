@@ -1,4 +1,5 @@
-import { View, StyleSheet, ImageBackground, Button, Alert,ScrollView} from 'react-native'
+import { View, StyleSheet, ImageBackground, Alert,ScrollView} from 'react-native'
+import { Button } from 'react-native-paper';
 import { useState } from "react";
 import * as loginService from '../services/LoginService'
 import CaixaText from "../components/CaixaText";
@@ -26,31 +27,37 @@ export default function Cadastro(props) {
 
 return (
     <View style={styles.container}>
+      {/* ------IMAGENS DE BACKGROUND------- */}  
       <ImageBackground source={require(backgroundimg)} resizeMode="cover" style={styles.image}>
       
-      <ScrollView> 
+      <ScrollView>  
       <View style={{marginTop:60}}>
+        {/* ------CAIXA DE NOME COMPLETO------- */} 
         <CaixaText 
           value={nome_completo}
           set = {setNome_completo}
           place = "Nome Completo"
         />
+        {/* ------CAIXA DE IDADE------- */}     
         <CaixaText 
           value={idade}
           set = {setIdade}
           place = "Idade"
         />
+        {/* ------CAIXA DE TELEFONE------- */}     
         <CaixaText 
           value={telefone}
           set = {setTelefone}
           place = "Telefone"
         />
+        {/* ------CAIXA DE E-MAIL------- */}   
         <CaixaText 
           value={email}
           set = {setEmail}
           place = "E-mail"
           teclakey='email-address'
         />
+        {/* ------CAIXA DE SENHA------- */}   
         <CaixaText 
           value={senha}
           set = {setSenha}
@@ -58,17 +65,17 @@ return (
           security={true}
         />
         </View>
+        
+        {/* ------BOTÃO PARA CADASTRAR------- */}   
+        <Button
+          style={{backgroundColor: 'white',minWidth: 300, borderRadius: 20, marginHorizontal: 30 , margin:30}}
+          labelStyle={{color: '#8A0B14', fontSize: 15}}
+          mode="contained" 
+          onPress={CadastroBtn}>
+            Cadastrar
+          </Button>
 
-        <View style={{backgroundColor: 'white',minWidth: 300, borderRadius: 10, marginHorizontal: 30 , margin:30}}>
-          <Button
-          title='Cadastro'
-          color='#262626'
-          onPress={CadastroBtn}
-          />
-        </View>
         </ScrollView> 
-
-
       </ImageBackground>
     </View>
   )

@@ -22,6 +22,10 @@ export const createUser = (email, senha) => {
                     console.log(errorCode)
                     if (errorCode === "auth/invalid-email")
                         reject("E-mail informado incorretamente!")
+                    else if(errorCode === 'auth/email-already-in-use')
+                        reject("Usuário já existente!\nCadastre um novo usuário.")
+                    else if(errorCode === 'auth/weak-password')
+                        reject("Senha fraca!\nCrie uma senha mais forte.")                       
                     else {
                         reject("Verifique suas credenciais (senha, email) e tente novamente!")
                     }
