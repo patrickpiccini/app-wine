@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import CaixaText from "../components/CaixaText";
 
 import * as loginService from '../services/LoginService'
+import * as userService from '../services/UsuarioService'
 
 const backgroundimg = "../images/fundo.png";
 const logo = "../images/logo.png";
@@ -47,22 +48,30 @@ export default function Login(props) {
 }
 
 {/* ------FUNÇÃO PARA LOGAR ATRAVÉZ DO FIREBASE------- */} 
-  // const efetuarLogin = async() => {
-  //   try {
-  //       let user = await loginService.login(email, senha)
-  //       navigation.replace("Home")
-  //   } catch (error) {
-  //       Alert.alert("Erro ao efetuar Loging", error)
-  // }}
+  const efetuarLogin = async() => {
+    try {
+      let dbRetorno = await userService.getUser(email)
+        let user = await loginService.login(email, senha)
+        navigation.replace("Home", dbRetorno)
+    } catch (error) {
+        Alert.alert("Erro ao efetuar Loging", error)
+  }}
 
 {/* ------LOGIN TEMPORARIO------- */} 
-  const efetuarLogin = () => {
-    if(email == "" && senha == ""){
-      navigation.replace("Home")
-    } else {
-      Alert.alert("Usuario ou senha invalido!")
-    }
- }
+//   const efetuarLogin = async () => {
+
+//     try {
+//       let dbRetorno = await userService.getUser(form)
+//     } catch (error) {
+      
+//     }
+
+//     if(email == "" && senha == ""){
+//       navigation.replace("Home")
+//     } else {
+//       Alert.alert("Usuario ou senha invalido!")
+//     }
+//  }
 
   const pageCadastro = () => {
     navigation.push("Cadastro")

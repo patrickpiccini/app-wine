@@ -1,7 +1,7 @@
 import { View, StyleSheet, ImageBackground, Alert,ScrollView} from 'react-native'
 import { Button } from 'react-native-paper';
 import { useState } from "react";
-import * as loginService from '../services/LoginService'
+import * as wineService from '../services/VinhoService'
 import CaixaText from "../components/CaixaText";
 
 const backgroundimg = "../images/fundo.png";
@@ -9,14 +9,22 @@ const backgroundimg = "../images/fundo.png";
 export default function AddVinho(props) {
 
   const navigation = props.navigation
+  const userInfo = props.route.params
 
-  const [nome_vinho, setNome_Vinho] = useState("")
-  const [uva, setUva] = useState("")
-  const [ano, setAno] = useState("")
-  const [vinicola, setVinicola] = useState("")
-  const [pais, setPais] = useState("")
+  const [form, setForm] = useState({})
 
-  const CadastroBtn = ''
+  const CadastroBtn = async () => {
+    form.email = userInfo.email
+    console.log("Form: ", form)
+    try {
+      let dbRetorno = await wineService.createWine(form)
+      Alert.alert(retorno)
+      setForm({})
+      navigation.replace("Adega", form)
+    } catch (error) {
+      Alert.alert("Erro ao registrar usuario", error, error.message)
+    }
+  }
   
 
 return (
@@ -28,33 +36,33 @@ return (
       <View style={{marginTop:60}}>
         {/* ------CAIXA DE NOME DO VINHO------- */} 
         <CaixaText 
-          value={nome_vinho}
-          set = {setNome_Vinho}
+          value={form.nome_vinho}
+          set = {(value) => setForm(Object.assign({}, form, { nome_vinho: value }))}
           place = "Nome do Vinho"
         />
         {/* ------CAIXA DE NOME DA UVA------- */}     
         <CaixaText 
-          value={uva}
-          set = {setUva}
+          value={form.uva}
+          set = {(value) => setForm(Object.assign({}, form, { uva: value }))}
           place = "Nome da Uva"
         />
         {/* ------CAIXA ANO------- */}     
         <CaixaText 
-          value={ano}
-          set = {setAno}
+          value={form.ano}
+          set = {(value) => setForm(Object.assign({}, form, { ano: value }))}
           place = "Ano Fabricação"
         />
         {/* ------CAIXA DA VINICOLA------- */}   
         <CaixaText 
-          value={vinicola}
-          set = {setVinicola}
-          place = "Vinicola"
+          value={form.vinicola}
+          set = {(value) => setForm(Object.assign({}, form, { vinicola: value }))}
+          place = "Endereço Vinicola"
 
         />
         {/* ------CAIXA DO PAIS------- */}   
         <CaixaText 
-          value={pais}
-          set = {setPais}
+          value={form.pais}
+          set = {(value) => setForm(Object.assign({}, form, { pais: value }))}
           place = "País"
         />
         </View>

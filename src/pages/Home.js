@@ -5,6 +5,9 @@ import * as loginService from '../services/LoginService'
 
 export default function Home(props) {
 
+  const userInfo = props.route.params
+
+
   const backgroundimg = "../images/fundo.png";
   const logo = "../images/logo.png";
   const adegaimg = "../images/adega.png";
@@ -12,6 +15,7 @@ export default function Home(props) {
   const mapaimg = "../images/vinicola.png";
 
   const navigation = props.navigation
+
 
   {/* ------FUNÇÃO QUEDESLOGA O USUARIO DO APP------- */} 
   const logoff = async () => {
@@ -79,7 +83,7 @@ export default function Home(props) {
           
           <View style={styles.columnImg}>
           {/* ------BOTÃO ADEGA------- */}   
-          <TouchableOpacity onPress={() => props.navigation.push("Adega")}>
+          <TouchableOpacity onPress={() => props.navigation.push("Adega", userInfo)}>
             <ImageBackground 
             resizeMode="cover"
             imageStyle={{ borderRadius: 30}}

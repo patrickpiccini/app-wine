@@ -1,24 +1,29 @@
-import { View, Text, StyleSheet, ImageBackground, Image,ScrollView} from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, Image,ScrollView, Alert, FlatList} from 'react-native'
 import { Button } from 'react-native-paper';
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect ,useState} from 'react'
+import * as wineService from '../services/VinhoService'
+import BoxVinho from '../components/BoxVinho';
+
 
 const backgroundimg = "../images/fundo.png";
 const logo = "../images/logo.png";
-const vinho = "../images/vinhoimg.png";
 
 
 export default function Adega(props) {
 
     const navigation = props.navigation
+    const userInfo = props.route.params
+    const [infoVinho, setInfoVinho] = useState()
+
 
     const cadastroVinho = () => {
       try {
-        navigation.push("AddVinho")
+        navigation.push("AddVinho", userInfo)
       } catch (error) {
         Alert.alert(error)
       }}
 
-    useLayoutEffect(() => {
+    useLayoutEffect(async () => {
       {/* ------BOTÃO DE LOGOFF------- */} 
       navigation.setOptions({headerRight: () => 
         <Button  labelStyle={{color: 'white', fontSize:30, }}
@@ -27,9 +32,14 @@ export default function Adega(props) {
         </Button>
     
       })
-    }, [])
 
-  
+      {/* ------COMEÇAR A FAZER ALISTA DE VINHO------- */}
+      await wineService.getWine(userInfo.email)
+      .then( (data) => {setInfoVinho(data)})
+      .catch(erro => console.log(erro))
+    }, [])
+    
+    console.log(infoVinho);
     return (
     <View style={styles.container}>
       {/* ------IMAGEM DE BACKGROUND------- */}   
@@ -40,8 +50,8 @@ export default function Adega(props) {
 
           <View style={styles.linha}>
             <View style={styles.columnUser}>
-            <Text style={{fontSize:20, fontWeight:'bold',color:'white'}}>Nome Completo</Text>
-            <Text style={{color:'white'}}>Passo Fundo</Text>
+            <Text style={{fontSize:20, fontWeight:'bold',color:'white'}}>{userInfo.nome_completo}</Text>
+            <Text style={{color:'white'}}>{userInfo.cidade}</Text>
             </View>
 
           <Image
@@ -54,237 +64,20 @@ export default function Adega(props) {
           </View>
 
         {/* ------MODELO DE BOX DE VINHOS------- */}
-          <View style={{backgroundColor:'#8A0B14', flexDirection: 'row' ,width:300,height:175,marginBottom:25, borderRadius:25}}>
-          <View style={{flex:1.1}}>
-            <Image source={require(vinho)} style={{width: 110,maxHeight: 175}}/>
-
-          </View>
-          <View style={{flex:1.1, paddingTop:20,}}>
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Nome: </Text>
-            <Text style={{color:'white', }}>Vinho Colonial </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Uva: </Text>
-            <Text style={{color:'white', }}>Tannat </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Ano: </Text>
-            <Text style={{color:'white', }}>1982 </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Vinícola: </Text>
-            <Text style={{color:'white', }}>Marca Diabo </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>País: </Text>
-            <Text style={{color:'white', }}>Brasil </Text>
-            </View>
-
-            <View style={{marginRight:50, marginTop:10}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="pencil"
-              onPress={console.log('editar')}>
-            </Button>
-            </View>
-
-
-
-          </View>
-          <View style={{ flex:1}}>
-          <View style={{marginLeft:40,flex:3}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="delete"
-              onPress={console.log('excluir')}>
-            </Button>
-            </View>
-            <View style={{marginLeft:40,}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="google-maps"
-              onPress={console.log('excluir')}>
-            </Button>
-            </View>
-          </View>
-          </View>         
-
-          <View style={{backgroundColor:'#8A0B14', flexDirection: 'row' ,width:300,height:175,marginBottom:25, borderRadius:25}}>
-          <View style={{flex:1.1}}>
-            <Image source={require(vinho)} style={{width: 110,maxHeight: 175}}/>
-
-          </View>
-          <View style={{flex:1.1, paddingTop:20,}}>
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Nome: </Text>
-            <Text style={{color:'white', }}>Vinho Colonial </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Uva: </Text>
-            <Text style={{color:'white', }}>Tannat </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Ano: </Text>
-            <Text style={{color:'white', }}>1982 </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Vinícola: </Text>
-            <Text style={{color:'white', }}>Marca Diabo </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>País: </Text>
-            <Text style={{color:'white', }}>Brasil </Text>
-            </View>
-
-            <View style={{marginRight:50, marginTop:10}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="pencil"
-              onPress={console.log('editar')}>
-            </Button>
-            </View>
-
-
-
-          </View>
-          <View style={{ flex:1}}>
-          <View style={{marginLeft:40,flex:3}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="delete"
-              onPress={console.log('excluir')}>
-            </Button>
-            </View>
-            <View style={{marginLeft:40,}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="google-maps"
-              onPress={console.log('excluir')}>
-            </Button>
-            </View>
-          </View>
-          </View>  
-
-          <View style={{backgroundColor:'#8A0B14', flexDirection: 'row' ,width:300,height:175,marginBottom:25, borderRadius:25}}>
-          <View style={{flex:1.1}}>
-            <Image source={require(vinho)} style={{width: 110,maxHeight: 175}}/>
-
-          </View>
-          <View style={{flex:1.1, paddingTop:20,}}>
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Nome: </Text>
-            <Text style={{color:'white', }}>Vinho Colonial </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Uva: </Text>
-            <Text style={{color:'white', }}>Tannat </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Ano: </Text>
-            <Text style={{color:'white', }}>1982 </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Vinícola: </Text>
-            <Text style={{color:'white', }}>Marca Diabo </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>País: </Text>
-            <Text style={{color:'white', }}>Brasil </Text>
-            </View>
-
-            <View style={{marginRight:50, marginTop:10}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="pencil"
-              onPress={console.log('editar')}>
-            </Button>
-            </View>
-
-
-
-          </View>
-          <View style={{ flex:1}}>
-          <View style={{marginLeft:40,flex:3}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="delete"
-              onPress={console.log('excluir')}>
-            </Button>
-            </View>
-            <View style={{marginLeft:40,}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="google-maps"
-              onPress={console.log('excluir')}>
-            </Button>
-            </View>
-          </View>
-          </View>  
-
-          <View style={{backgroundColor:'#8A0B14', flexDirection: 'row' ,width:300,height:175,marginBottom:25, borderRadius:25}}>
-          <View style={{flex:1.1}}>
-            <Image source={require(vinho)} style={{width: 110,maxHeight: 175}}/>
-
-          </View>
-          <View style={{flex:1.1, paddingTop:20,}}>
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Nome: </Text>
-            <Text style={{color:'white', }}>Vinho Colonial </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Uva: </Text>
-            <Text style={{color:'white', }}>Tannat </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Ano: </Text>
-            <Text style={{color:'white', }}>1982 </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>Vinícola: </Text>
-            <Text style={{color:'white', }}>Marca Diabo </Text>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{color:'white', fontWeight:'bold'}}>País: </Text>
-            <Text style={{color:'white', }}>Brasil </Text>
-            </View>
-
-            <View style={{marginRight:50, marginTop:10}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="pencil"
-              onPress={console.log('editar')}>
-            </Button>
-            </View>
-
-
-
-          </View>
-          <View style={{ flex:1}}>
-          <View style={{marginLeft:40,flex:3}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="delete"
-              onPress={console.log('excluir')}>
-            </Button>
-            </View>
-            <View style={{marginLeft:40,}}>
-            <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-              icon="google-maps"
-              onPress={console.log('excluir')}>
-            </Button>
-            </View>
-          </View>
-          </View>  
+          <FlatList
+              data={infoVinho}
+              renderItem={ ({item}) => {
+                  return <BoxVinho
+                  dados={item}
+                  navigation={navigation}
+                  />
+              }}
+              keyExtractor={item => item.index || item.key}
+              />
 
         
-          {/* ------LOGO PICCINI & PITT------- */}  
-          <Image source={require(logo)} style={styles.logo}/>
+        {/* ------LOGO PICCINI & PITT------- */}  
+        <Image source={require(logo)} style={styles.logo}/>
       </ScrollView>
     </View>
     </ImageBackground>

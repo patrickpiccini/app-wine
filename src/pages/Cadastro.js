@@ -2,27 +2,33 @@ import { View, StyleSheet, ImageBackground, Alert,ScrollView} from 'react-native
 import { Button } from 'react-native-paper';
 import { useState } from "react";
 import * as loginService from '../services/LoginService'
+import * as userService from '../services/UsuarioService'
 import CaixaText from "../components/CaixaText";
 
 const backgroundimg = "../images/fundo.png";
 
 export default function Cadastro(props) {
 
-  const [nome_completo, setNome_completo] = useState("")
-  const [idade, setIdade] = useState("")
-  const [telefone, setTelefone] = useState("")
-  const [email, setEmail] = useState("")
-  const [senha, setSenha] = useState("")
   const navigation = props.navigation
 
+  const [form, setForm] = useState({})
+
+
   const CadastroBtn = async() => {
-    try {
-      let retorno = await loginService.createUser(email, senha)
-      Alert.alert(retorno)
-      navigation.replace("Home")
-    } catch (error) {
-      Alert.alert("Erro ao registrar usuario", error)
-    }}
+    if (form.nome_completo && form.idade && form.telefone && form.email && form.senha) {
+      try {
+        let dbRetorno = await userService.createUser(form)
+        let retorno = await loginService.createUser(form.email, form.senha)
+        Alert.alert(retorno)
+        setForm({})
+        navigation.replace("Home", form)
+      } catch (error) {
+        Alert.alert("Erro ao registrar usuario", error, error.message)
+      }
+      } else {
+        Alert.alert("Campos não preenchidos corretamente!")
+      }
+  }
 
 
 return (
@@ -34,33 +40,39 @@ return (
       <View style={{marginTop:60}}>
         {/* ------CAIXA DE NOME COMPLETO------- */} 
         <CaixaText 
-          value={nome_completo}
-          set = {setNome_completo}
+          value={form.nome_completo}
+          set = {(value) => setForm(Object.assign({}, form, { nome_completo: value }))}
           place = "Nome Completo"
         />
         {/* ------CAIXA DE IDADE------- */}     
         <CaixaText 
-          value={idade}
-          set = {setIdade}
+          value={form.idade}
+          set = {(value) => setForm(Object.assign({}, form, { idade: value }))}
           place = "Idade"
         />
         {/* ------CAIXA DE TELEFONE------- */}     
         <CaixaText 
-          value={telefone}
-          set = {setTelefone}
+          value={form.telefone}
+          set = {(value) => setForm(Object.assign({}, form, { telefone: value }))}
           place = "Telefone"
+        />
+        {/* ------CAIXA DE CIDADE------- */}     
+        <CaixaText 
+          value={form.cidade}
+          set = {(value) => setForm(Object.assign({}, form, { cidade: value }))}
+          place = "Cidade"
         />
         {/* ------CAIXA DE E-MAIL------- */}   
         <CaixaText 
-          value={email}
-          set = {setEmail}
+          value={form.email}
+          set = {(value) => setForm(Object.assign({}, form, { email: value }))}
           place = "E-mail"
           teclakey='email-address'
         />
         {/* ------CAIXA DE SENHA------- */}   
         <CaixaText 
-          value={senha}
-          set = {setSenha}
+          value={form.senha}
+          set = {(value) => setForm(Object.assign({}, form, { senha: value }))}
           place = "Senha"
           security={true}
         />

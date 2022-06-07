@@ -4,8 +4,10 @@ import React, {useState,useLayoutEffect} from 'react'
 
 export default function CaixaText(props) {
 
+    const navigation = props.navigation
     const [place, setPlace] = useState(props.place ? props.place :"")
     const [teclakey, setTypeKey] = useState(props.teclakey ? props.teclakey : 'default')
+
 
     return (
         <View>
