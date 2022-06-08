@@ -58,7 +58,7 @@ export default function BoxVinho(props) {
       <View style={{marginRight:50, marginTop:10}}>
       <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
         icon="pencil"
-        onPress={console.log('--------------')}>
+        onPress={{}}>
       </Button>
       </View>
 
@@ -69,13 +69,13 @@ export default function BoxVinho(props) {
     <View style={{marginLeft:40,flex:3}}>
       <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
         icon="delete"
-        onPress={console.log('--------------')}>
+        onPress={{}}>
       </Button>
       </View>
       <View style={{marginLeft:40,}}>
       <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
         icon="google-maps"
-        onPress={console.log('--------------')}>
+        onPress={{}}>
       </Button>
       </View>
     </View>

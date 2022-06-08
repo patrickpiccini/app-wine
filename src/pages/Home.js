@@ -6,6 +6,7 @@ import * as loginService from '../services/LoginService'
 export default function Home(props) {
 
   const userInfo = props.route.params
+  const navigation = props.navigation
 
 
   const backgroundimg = "../images/fundo.png";
@@ -14,7 +15,6 @@ export default function Home(props) {
   const harmonizaçãoimg = "../images/harmonizar.png";
   const mapaimg = "../images/vinicola.png";
 
-  const navigation = props.navigation
 
 
   {/* ------FUNÇÃO QUEDESLOGA O USUARIO DO APP------- */} 
@@ -34,8 +34,8 @@ export default function Home(props) {
       }}
 
 
-  
   useLayoutEffect(() => {
+    console.log(userInfo);
     {/* ------BOTÃO DE LOGOFF------- */} 
     navigation.setOptions({headerLeft: () => 
       <Button  labelStyle={{color: 'white', fontSize:15, }}
@@ -58,6 +58,7 @@ export default function Home(props) {
 
   }, [])
 
+  
   return (
     <View style={styles.container}>
       {/* ------IMAGEM DE BACKGROUND------- */}   

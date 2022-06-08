@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ImageBackground, Image,ScrollView, Alert, FlatList} from 'react-native'
 import { Button } from 'react-native-paper';
-import React, { useLayoutEffect ,useState} from 'react'
+import React, { useLayoutEffect ,useState, useEffect} from 'react'
 import * as wineService from '../services/VinhoService'
 import BoxVinho from '../components/BoxVinho';
 
@@ -32,36 +32,50 @@ export default function Adega(props) {
         </Button>
     
       })
+      
+    }, [])
 
-      {/* ------COMEÇAR A FAZER ALISTA DE VINHO------- */}
+    const getWineFunction = async () =>{
       await wineService.getWine(userInfo.email)
       .then( (data) => {setInfoVinho(data)})
       .catch(erro => console.log(erro))
-    }, [])
-    
-    console.log(infoVinho);
-    return (
+    }
+
+    useEffect(() => { 
+      getWineFunction()
+    });
+
+
+  {/* ------HEADER DA FLATLIST------- */} 
+    const getHeader = () => {
+      return <View style={styles.linha}>
+      <View style={styles.columnUser}>
+      <Text style={{fontSize:20, fontWeight:'bold',color:'white'}}>{userInfo.nome_completo}</Text>
+      <Text style={{color:'white'}}>{userInfo.cidade}</Text>
+      </View>
+
+    <Image
+          style={styles.imgLogo}
+          source={{
+            uri: 'https://reactnative.dev/img/tiny_logo.png',
+          }}
+          />
+
+    </View>
+  };
+
+  {/* ------FOOTER DA FLATLIST------- */} 
+  const getFooter = () => {
+      {/* ------LOGO PICCINI & PITT------- */}  
+      return <Image source={require(logo)} style={styles.logo}/>
+  };
+
+
+  return (
     <View style={styles.container}>
       {/* ------IMAGEM DE BACKGROUND------- */}   
     <ImageBackground source={require(backgroundimg)} resizeMode="cover" style={styles.image}>
     <View style={styles.columnBox}>
-     
-      <ScrollView>
-
-          <View style={styles.linha}>
-            <View style={styles.columnUser}>
-            <Text style={{fontSize:20, fontWeight:'bold',color:'white'}}>{userInfo.nome_completo}</Text>
-            <Text style={{color:'white'}}>{userInfo.cidade}</Text>
-            </View>
-
-          <Image
-                style={styles.imgLogo}
-                source={{
-                  uri: 'https://reactnative.dev/img/tiny_logo.png',
-                }}
-                />
-
-          </View>
 
         {/* ------MODELO DE BOX DE VINHOS------- */}
           <FlatList
@@ -72,13 +86,11 @@ export default function Adega(props) {
                   navigation={navigation}
                   />
               }}
-              keyExtractor={item => item.index || item.key}
+              keyExtractor={item => item.id}
+              ListHeaderComponent={getHeader}
+              ListFooterComponent={getFooter}
               />
 
-        
-        {/* ------LOGO PICCINI & PITT------- */}  
-        <Image source={require(logo)} style={styles.logo}/>
-      </ScrollView>
     </View>
     </ImageBackground>
     </View>

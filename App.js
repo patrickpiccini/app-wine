@@ -20,7 +20,7 @@ const Stack = createNativeStackNavigator();
 import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
-  'AsyncStorage',
+  'AsyncStorage has been extracted',
   
 ])
 

@@ -25,7 +25,7 @@ export const getWine = (emailKey) => {
             let registros = []
             querySnapshot.forEach((item) => {
                 let data = item.data()
-                data.key = item.id
+                data.id = item.id
                 registros.push(data)
             })
             resolve(registros)
