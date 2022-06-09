@@ -1,12 +1,19 @@
 import db from "../config/firebaseConnect"
+import { searchByAddress } from "./LocationService"
 
 import { collection, addDoc, getDocs, deleteDoc, doc, query, where } from 'firebase/firestore'
 // import { searchByAddress } from "./LocationService"
 
 
-export const createWine = (dados) => {
+export const createWine = (dados, email) => {
     return new Promise(async (resolve, reject) => {
         try {
+            var coordenadas = await searchByAddress(dados.endereco)
+            let lat = coordenadas.lat
+            let lng = coordenadas.lng
+            dados.lat = lat
+            dados.lng = lng
+            dados.email = email 
             const docId = await addDoc(collection(db, "vinho"), dados)
             resolve(docId)
         } catch (error) {
@@ -14,6 +21,7 @@ export const createWine = (dados) => {
         }
     })
 }
+
 
 
 export const getWine = (emailKey) => {
@@ -37,16 +45,16 @@ export const getWine = (emailKey) => {
 }
 
 
-// export const deleteWine = (key) => {
-//     console.log("Delete", key)
-//     return new Promise(async (resolve, reject) => {
+export const deleteWine = (key) => {
+    console.log("Delete", key)
+    return new Promise(async (resolve, reject) => {
 
-//         try {
-//             await deleteDoc(doc(db, "vinho", key))
-//             resolve()
-//         } catch (error) {
-//             console.log(error)
-//             reject()
-//         }
-//     })
-// }
+        try {
+            await deleteDoc(doc(db, "vinho", key))
+            resolve()
+        } catch (error) {
+            console.log(error)
+            reject()
+        }
+    })
+}

@@ -2,10 +2,11 @@ import { StyleSheet, Text, View, Alert, ImageBackground,ScrollView,Image,Touchab
 import React, { useLayoutEffect, useState, useEffect } from 'react'
 import { Button } from 'react-native-paper';
 import * as loginService from '../services/LoginService'
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Home(props) {
 
-  const userInfo = props.route.params
+  const userInfo = useSelector(store => store.user)
   const navigation = props.navigation
 
 
@@ -14,7 +15,7 @@ export default function Home(props) {
   const adegaimg = "../images/adega.png";
   const harmonizaçãoimg = "../images/harmonizar.png";
   const mapaimg = "../images/vinicola.png";
-
+  
 
 
   {/* ------FUNÇÃO QUEDESLOGA O USUARIO DO APP------- */} 
@@ -35,7 +36,6 @@ export default function Home(props) {
 
 
   useLayoutEffect(() => {
-    console.log(userInfo);
     {/* ------BOTÃO DE LOGOFF------- */} 
     navigation.setOptions({headerLeft: () => 
       <Button  labelStyle={{color: 'white', fontSize:15, }}

@@ -4,8 +4,10 @@ import { ImageBackground, StyleSheet,Text, View, Image,Alert,ScrollView} from "r
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import CaixaText from "../components/CaixaText";
 
-import * as loginService from '../services/LoginService'
-import * as userService from '../services/UsuarioService'
+import * as loginService from '../services/LoginService';
+import * as userService from '../services/UsuarioService';
+import * as UserAction from '../services/actions/user.action';
+import { useSelector, useDispatch } from 'react-redux';
 
 const backgroundimg = "../images/fundo.png";
 const logo = "../images/logo.png";
@@ -17,6 +19,8 @@ export default function Login(props) {
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
   const [lembreme, setLembreme] = useState(false);
+  const dispatch = useDispatch()
+
 
 
   {/* ------VERIFICA SE EXITE EMAIL E SENHA NO ASYNCSTORAGE------- */} 
@@ -52,31 +56,16 @@ export default function Login(props) {
     try {
       let dbRetorno = await userService.getUser(email)
         let user = await loginService.login(email, senha)
-        navigation.replace("Home", dbRetorno)
+        dispatch(UserAction.setUser(dbRetorno))
+        navigation.replace("Home")
     } catch (error) {
         Alert.alert("Erro ao efetuar Loging", error)
   }}
 
-{/* ------LOGIN TEMPORARIO------- */} 
-//   const efetuarLogin = async () => {
-
-//     try {
-//       let dbRetorno = await userService.getUser(form)
-//     } catch (error) {
-      
-//     }
-
-//     if(email == "" && senha == ""){
-//       navigation.replace("Home")
-//     } else {
-//       Alert.alert("Usuario ou senha invalido!")
-//     }
-//  }
-
+{/* ------FUNÇÃO PARA IR À TELA DE CADASTRO------- */} 
   const pageCadastro = () => {
     navigation.push("Cadastro")
   }
-
 
   return (
     <View style={styles.container}>

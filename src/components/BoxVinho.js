@@ -1,6 +1,7 @@
-import { View, Text ,StyleSheet, Image} from 'react-native';
+import { View, Text ,StyleSheet, Image,Alert} from 'react-native';
 import React, { useLayoutEffect, useState } from 'react'
 import { Button } from 'react-native-paper';
+import * as wineService from '../services/VinhoService'
 
 
 const vinho = "../images/vinhoimg.png";
@@ -12,7 +13,8 @@ export default function BoxVinho(props) {
     const [uva, setUva] = useState()
     const [ano, setAno] = useState()
     const [vinicola, setVinicola] = useState()
-    const [pais, setPais] = useState()
+    const [endereco, setEndereco] = useState()
+    const [key, setKey] = useState()
 
 
     useLayoutEffect(() => {
@@ -20,8 +22,33 @@ export default function BoxVinho(props) {
         setUva(data.uva)
         setAno(data.ano)
         setVinicola(data.vinicola)
-        setPais(data.pais)
+        setEndereco(data.endereco)
+        setKey(data.id)
     })
+
+    const excluirVinho = () => {
+
+
+      Alert.alert("Deseja Excluir?", "Esse vinho será apagado permanentemente!", [
+          {
+              text: "Cancel",
+              style: "cancel"
+          },
+          {
+              text: "OK", onPress: async () => {
+                  try {
+                    console.log(key);
+                      await wineService.deleteWine(key)
+                      props.getWineFunction()
+                      Alert.alert("Dados Excluídos com Sucesso")
+                  } catch (error) {
+                      Alert.alert("Você não possui permissão para excluir esse registro!")
+                  }
+              }
+          }
+      ])
+
+  }
 
   return (
     <View style={{backgroundColor:'#8A0B14', flexDirection: 'row' ,width:300,height:175,marginBottom:25, borderRadius:25}}>
@@ -51,8 +78,8 @@ export default function BoxVinho(props) {
       </View>
 
       <View style={{flexDirection: 'row'}}>
-      <Text style={{color:'white', fontWeight:'bold'}}>País: </Text>
-      <Text style={{color:'white', }}>{pais} </Text>
+      <Text style={{color:'white', fontWeight:'bold'}}>Endereço: </Text>
+      <Text style={{color:'white', }}>{endereco} </Text>
       </View>
 
       <View style={{marginRight:50, marginTop:10}}>
@@ -69,7 +96,7 @@ export default function BoxVinho(props) {
     <View style={{marginLeft:40,flex:3}}>
       <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
         icon="delete"
-        onPress={{}}>
+        onPress={excluirVinho}>
       </Button>
       </View>
       <View style={{marginLeft:40,}}>

@@ -1,7 +1,7 @@
 import Geocoder from "react-native-geocoding";
 
 //Chave específica por projeto
-Geocoder.init("AIzaSyD_-MlIAviSb55bMk8PutPq8WyDgUul-dU")
+Geocoder.init("AIzaSyAUg8kz_aIdnMz3ReScEuVjHthNYPAiFRA")
 
 
 export const searchByAddress = (endereco) => {

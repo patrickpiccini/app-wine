@@ -1,9 +1,9 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Provider as StoreProvider } from 'react-redux';
 import Login from './src/pages/Login';
 import Cadastro from './src/pages/Cadastro';
 import Home from './src/pages/Home';
@@ -13,6 +13,7 @@ import Mapa from './src/pages/Mapa';
 import Sobre from './src/pages/Sobre';
 import Faq from './src/pages/Faq';
 import AddVinho from './src/pages/AddVinho';
+import store from './src/services/store.service'
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ LogBox.ignoreLogs([
 
 function App() {
   return (
+    <StoreProvider store={store}>
     <NavigationContainer>
       <Stack.Navigator initialRouteName='login'
       screenOptions={{ 
@@ -117,6 +119,7 @@ function App() {
 
       </Stack.Navigator>
     </NavigationContainer>
+    </StoreProvider>
   );
 }
 

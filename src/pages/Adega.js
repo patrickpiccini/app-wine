@@ -3,6 +3,7 @@ import { Button } from 'react-native-paper';
 import React, { useLayoutEffect ,useState, useEffect} from 'react'
 import * as wineService from '../services/VinhoService'
 import BoxVinho from '../components/BoxVinho';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const backgroundimg = "../images/fundo.png";
@@ -12,18 +13,18 @@ const logo = "../images/logo.png";
 export default function Adega(props) {
 
     const navigation = props.navigation
-    const userInfo = props.route.params
+    const userInfo = useSelector(store => store.user)
     const [infoVinho, setInfoVinho] = useState()
-
-
+    
+    {/* ------VAI PARA TELA DE CADASTRO DE VINHO------- */}  
     const cadastroVinho = () => {
       try {
-        navigation.push("AddVinho", userInfo)
+        navigation.push("AddVinho")
       } catch (error) {
         Alert.alert(error)
       }}
 
-    useLayoutEffect(async () => {
+    useLayoutEffect(() => {
       {/* ------BOTÃO DE LOGOFF------- */} 
       navigation.setOptions({headerRight: () => 
         <Button  labelStyle={{color: 'white', fontSize:30, }}
@@ -32,19 +33,19 @@ export default function Adega(props) {
         </Button>
     
       })
-      
+
+
+      getWineFunction()
     }, [])
 
+    {/* ------SELECT DE TODOS OS VINHOS DO USUARIO------- */}  
     const getWineFunction = async () =>{
-      await wineService.getWine(userInfo.email)
-      .then( (data) => {setInfoVinho(data)})
-      .catch(erro => console.log(erro))
-    }
-
-    useEffect(() => { 
-      getWineFunction()
-    });
-
+      try{
+      let dataWine = await wineService.getWine(userInfo.email)
+      setInfoVinho(dataWine)
+    } catch (error) {
+      Alert.alert(error)
+    }}
 
   {/* ------HEADER DA FLATLIST------- */} 
     const getHeader = () => {
@@ -84,6 +85,7 @@ export default function Adega(props) {
                   return <BoxVinho
                   dados={item}
                   navigation={navigation}
+                  getWineFunction={getWineFunction}
                   />
               }}
               keyExtractor={item => item.id}

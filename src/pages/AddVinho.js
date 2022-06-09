@@ -1,7 +1,9 @@
 import { View, StyleSheet, ImageBackground, Alert,ScrollView} from 'react-native'
 import { Button } from 'react-native-paper';
 import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import * as wineService from '../services/VinhoService'
+import * as coordService from '../services/MapsService'
 import CaixaText from "../components/CaixaText";
 
 const backgroundimg = "../images/fundo.png";
@@ -9,20 +11,20 @@ const backgroundimg = "../images/fundo.png";
 export default function AddVinho(props) {
 
   const navigation = props.navigation
-  const userInfo = props.route.params
+  const userInfo = useSelector(store => store.user)
 
   const [form, setForm] = useState({})
 
+  {/* ------BTN FAZ O CADASTRO DOS VINHOS------- */}  
   const CadastroBtn = async () => {
-    form.email = userInfo.email
-    console.log("Form: ", form)
     try {
-      let dbRetorno = await wineService.createWine(form)
-      Alert.alert(retorno)
+      await wineService.createWine(form, userInfo.email)
+      await coordService.createCoord(form.endereco, form.vinicola)
       setForm({})
-      navigation.replace("Adega", form)
+      Alert.alert("Dados Registrados com Sucesso")
+      navigation.replace("Adega")
     } catch (error) {
-      Alert.alert("Erro ao registrar usuario", error, error.message)
+      Alert.alert("Erro ao registrar vinho", error)
     }
   }
   
@@ -56,14 +58,15 @@ return (
         <CaixaText 
           value={form.vinicola}
           set = {(value) => setForm(Object.assign({}, form, { vinicola: value }))}
-          place = "Endereço Vinicola"
+          place = "Vinicola"
 
         />
-        {/* ------CAIXA DO PAIS------- */}   
+
+        {/* ------CAIXA DO ENDEREÇO------- */}   
         <CaixaText 
-          value={form.pais}
-          set = {(value) => setForm(Object.assign({}, form, { pais: value }))}
-          place = "País"
+          value={form.endereco}
+          set = {(value) => setForm(Object.assign({}, form, { endereco: value }))}
+          place = "Endereço"
         />
         </View>
         

@@ -13,11 +13,12 @@ export default function Cadastro(props) {
 
   const [form, setForm] = useState({})
 
-
+  {/* ------BTN DE CADASTRO DE USUARIO------- */}
+  {/* ------CADASTRO NO FIRESTORAGE E AUTHENTICATION------- */}
   const CadastroBtn = async() => {
     if (form.nome_completo && form.idade && form.telefone && form.email && form.senha) {
       try {
-        let dbRetorno = await userService.createUser(form)
+        await userService.createUser(form)
         let retorno = await loginService.createUser(form.email, form.senha)
         Alert.alert(retorno)
         setForm({})
