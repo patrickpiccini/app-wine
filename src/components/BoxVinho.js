@@ -7,14 +7,17 @@ import * as wineService from '../services/VinhoService'
 const vinho = "../images/vinhoimg.png";
 
 export default function BoxVinho(props) {
-
+    
+    const navigation = props.navigation
     const data = props.dados
+
     const [nomeVinho, setNomeVinho] = useState()
     const [uva, setUva] = useState()
     const [ano, setAno] = useState()
     const [vinicola, setVinicola] = useState()
     const [endereco, setEndereco] = useState()
     const [key, setKey] = useState()
+    const [uuid4, setUuid4] = useState()
 
 
     useLayoutEffect(() => {
@@ -24,31 +27,43 @@ export default function BoxVinho(props) {
         setVinicola(data.vinicola)
         setEndereco(data.endereco)
         setKey(data.id)
+        setUuid4(data.uuid4)
     })
 
     const excluirVinho = () => {
-
-
       Alert.alert("Deseja Excluir?", "Esse vinho será apagado permanentemente!", [
-          {
-              text: "Cancel",
-              style: "cancel"
-          },
-          {
-              text: "OK", onPress: async () => {
-                  try {
-                    console.log(key);
-                      await wineService.deleteWine(key)
-                      props.getWineFunction()
-                      Alert.alert("Dados Excluídos com Sucesso")
-                  } catch (error) {
-                      Alert.alert("Você não possui permissão para excluir esse registro!")
-                  }
-              }
-          }
-      ])
-
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "OK", onPress: async () => {
+          try {
+            console.log(key);
+              await wineService.deleteWine(key)
+              props.getWineFunction()
+              Alert.alert("Dados Excluídos com Sucesso")
+          } catch (error) {
+              Alert.alert("Você não possui permissão para excluir esse registro!")
+      }}}
+    ])
   }
+  
+  {/* ------ICONE DE LOCALUZAÇÃO DA VINICULA DE UM VINHO ESPECIFICO------- */}   
+  const MapTela = () => {
+    try {
+      navigation.push("Mapa",uuid4)
+    } catch (error) {
+      Alert.alert(error)
+    }}
+
+  const AtualizarVinhoTela = () => {
+      try {
+        navigation.push("UpdateVinho",key)
+      } catch (error) {
+        Alert.alert(error)
+      }}
+
 
   return (
     <View style={{backgroundColor:'#8A0B14', flexDirection: 'row' ,width:300,height:175,marginBottom:25, borderRadius:25}}>
@@ -56,7 +71,7 @@ export default function BoxVinho(props) {
       <Image source={require(vinho)} style={{width: 110,maxHeight: 175}}/>
 
     </View>
-    <View style={{flex:1.1, paddingTop:20,}}>
+    <View style={{flex:1.1, paddingTop:20}}>
       <View style={{flexDirection: 'row'}}>
       <Text style={{color:'white', fontWeight:'bold'}}>Nome: </Text>
       <Text style={{color:'white', }}>{nomeVinho}</Text>
@@ -77,34 +92,39 @@ export default function BoxVinho(props) {
       <Text style={{color:'white', }}>{vinicola} </Text>
       </View>
 
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'column'}}>
       <Text style={{color:'white', fontWeight:'bold'}}>Endereço: </Text>
       <Text style={{color:'white', }}>{endereco} </Text>
       </View>
 
-      <View style={{marginRight:50, marginTop:10}}>
-      <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-        icon="pencil"
-        onPress={{}}>
+    </View>
+
+
+
+    <View style={{flexDirection:"column"}}>
+
+    <View style={{flex:1, alignItems: 'center',justifyContent: 'center',}}>
+      <Button  labelStyle={{color: 'white', fontSize:25 }}
+        icon="google-maps"
+        onPress={MapTela}>
       </Button>
       </View>
 
+    <View style={{flex:1, alignItems: 'center',justifyContent: 'center',}}>
+      <Button  labelStyle={{color: 'white', fontSize:25 }}
+        icon="pencil"
+        onPress={AtualizarVinhoTela}>
+      </Button>
+      </View>
 
-
-    </View>
-    <View style={{ flex:1}}>
-    <View style={{marginLeft:40,flex:3}}>
-      <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
+    <View style={{flex:1, alignItems: 'center',justifyContent: 'center',}}>
+      <Button  labelStyle={{color: 'white', fontSize:25 }}
         icon="delete"
         onPress={excluirVinho}>
       </Button>
       </View>
-      <View style={{marginLeft:40,}}>
-      <Button  labelStyle={{color: 'white', fontSize:25, alignSelf:'flex-start'}}
-        icon="google-maps"
-        onPress={{}}>
-      </Button>
-      </View>
+  
+      
     </View>
     </View>    
   )

@@ -5,7 +5,7 @@ import { collection, addDoc, getDocs, deleteDoc, doc, query, where } from 'fireb
 // import { searchByAddress } from "./LocationService"
 
 
-export const createWine = (dados, email) => {
+export const createWine = (dados, email, uuid4) => {
     return new Promise(async (resolve, reject) => {
         try {
             var coordenadas = await searchByAddress(dados.endereco)
@@ -14,10 +14,31 @@ export const createWine = (dados, email) => {
             dados.lat = lat
             dados.lng = lng
             dados.email = email 
+            dados.uuid4 = uuid4
             const docId = await addDoc(collection(db, "vinho"), dados)
             resolve(docId)
         } catch (error) {
             reject(error)
+        }
+    })
+}
+
+export const updateWine = (key, data) => {
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            const docRef = await collection(db, 'vinho' + "/" + key)
+            const querySnapshot = await docRef.update({
+                'ano':data.ano,
+                'endereco':data.endereco,
+                'nome_vinho':data.nome_vinho,
+                'uva':data.uva,
+                'vinicola':data.vinicola,
+            })
+            resolve(querySnapshot.data())
+        } catch (error) {
+            console.log("Erro:", error)
+            reject()
         }
     })
 }
@@ -43,6 +64,7 @@ export const getWine = (emailKey) => {
         }
     })
 }
+
 
 
 export const deleteWine = (key) => {

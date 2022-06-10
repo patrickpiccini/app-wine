@@ -12,8 +12,9 @@ import Harmonizacao from './src/pages/Harmonizacao';
 import Mapa from './src/pages/Mapa';
 import Sobre from './src/pages/Sobre';
 import Faq from './src/pages/Faq';
-import AddVinho from './src/pages/AddVinho';
-import store from './src/services/store.service'
+import UpdateVinho from './src/pages/UpdateVinho';
+import CadastroVinho from './src/pages/CadastroVinho';
+import store from './src/services/StoreService'
 
 const Stack = createNativeStackNavigator();
 
@@ -107,13 +108,22 @@ function App() {
         />   
 
         <Stack.Screen 
-        name="AddVinho" 
-        component={AddVinho} 
+        name="CadastroVinho" 
+        component={CadastroVinho} 
         options={{
           title:"Cadstro Vinho",
           headerTitleAlign:'center'
         }}
         />   
+
+        <Stack.Screen 
+        name="UpdateVinho" 
+        component={UpdateVinho} 
+        options={{
+          title:"Atualzar Vinho",
+          headerTitleAlign:'center'
+        }}
+        />  
 
 
 

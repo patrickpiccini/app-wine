@@ -1,14 +1,18 @@
-import { View, Text, StyleSheet, ImageBackground, Dimensions } from 'react-native'
-import React, { useLayoutEffect, useState, useEffect } from 'react'
+import { View, StyleSheet, ImageBackground, Dimensions,Alert } from 'react-native'
+import React, {  useState, useEffect } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import * as Location from "expo-location"
 import * as coordService from '../services/MapsService'
+
 
 const backgroundimg = "../images/fundo.png";
 
 export default function Mapa(props) {
 
     const navigation = props.navigation 
+    const data = props.route
+    
+    const keyVinho = data.params
 
     const [vinhoLocal, setVinhoLocal] = useState([])
     const [location, setLocation] = useState({
@@ -18,6 +22,7 @@ export default function Mapa(props) {
       }
     })
 
+    {/* ------BUSCA LOCALIZAÇÃO LOCALIZAÇÃO ATUAL DO CELULAR------- */} 
     const myPosition = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -28,7 +33,7 @@ export default function Mapa(props) {
       }
   
     }
-
+    {/* ------BUSCA LOCALIZAÇÃO DE TODAS AS VINICULA------- */} 
     const buscarVinicolas = async () => {
       try {
         let dados = await coordService.getCoord()
@@ -37,11 +42,38 @@ export default function Mapa(props) {
   
       }
     }
+
+    {/* ------BUSCA LOCALIZAÇÃO DA VINICULA POR UUID------- */}   
+    const buscarVinicolasPoruuid = async () => {
+      try {
+        setVinhoLocal([])
+        let dados = await coordService.getCoordUnique(keyVinho)
+        console.log(dados);
+        setVinhoLocal(dados)
+      } catch (error) {
+  
+      }
+    }
+
+    const focustPoint = () =>{
+      if(keyVinho){
+        initialRegion={
+          latitude: lat,
+          longitude: lng,
+          latitudeDelta: 0.10,
+          longitudeDelta: 0.10,
+        }}    
+  }
     
 
     useEffect(() => {
       myPosition()
-      buscarVinicolas()
+      if (keyVinho){
+        buscarVinicolasPoruuid()
+      } else {
+        buscarVinicolas()
+      }
+      
     }, [])
   
     return (
@@ -57,26 +89,29 @@ export default function Mapa(props) {
             longitudeDelta: 0.10,
           }}
         >
+        {/* ------PONTO DA LOCALIZAÇÃO ATUAL NO MAPA------- */}   
         {location && <Marker
           coordinate={
             {
               latitude: location.coords.latitude,
-              longitude: location.coords.longitude
+              longitude: location.coords.longitude,
+
             }
           }
           title='Você'
           icon='map-marker'
         />}
-
+          {/* ------PONTOS DE VINICULA NO MAPA------- */}   
           {vinhoLocal.map((vinicola, key) => <Marker
 
-          key={key}
-          coordinate={{
+          key={key}          
+          coordinate={{ 
             latitude: vinicola.lat,
-            longitude: vinicola.lng
+            longitude: vinicola.lng,
           }}
           title={vinicola.vinicola}
           icon='map-marker'
+          onPress={() => Alert.alert(`Vinicola: ${vinicola.vinicola}\nEndereço: ${vinicola.endereco}`)}
 
           />)}
 

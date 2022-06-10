@@ -31,17 +31,3 @@ export const getUser = (emailId) => {
     })
 }
 
-
-// export const deleteUser = (key) => {
-//     console.log("Delete", key)
-//     return new Promise(async (resolve, reject) => {
-
-//         try {
-//             await deleteDoc(doc(db, "users", key))
-//             resolve()
-//         } catch (error) {
-//             console.log(error)
-//             reject()
-//         }
-//     })
-// }

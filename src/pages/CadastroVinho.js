@@ -1,14 +1,15 @@
 import { View, StyleSheet, ImageBackground, Alert,ScrollView} from 'react-native'
 import { Button } from 'react-native-paper';
 import { useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import * as wineService from '../services/VinhoService'
 import * as coordService from '../services/MapsService'
 import CaixaText from "../components/CaixaText";
 
+import uuid from 'react-native-uuid';
 const backgroundimg = "../images/fundo.png";
 
-export default function AddVinho(props) {
+export default function CadastroVinho(props) {
 
   const navigation = props.navigation
   const userInfo = useSelector(store => store.user)
@@ -18,10 +19,11 @@ export default function AddVinho(props) {
   {/* ------BTN FAZ O CADASTRO DOS VINHOS------- */}  
   const CadastroBtn = async () => {
     try {
-      await wineService.createWine(form, userInfo.email)
-      await coordService.createCoord(form.endereco, form.vinicola)
-      setForm({})
+      let uuid4 = uuid.v4();
+      await wineService.createWine(form, userInfo.email, uuid4)
+      await coordService.createCoord(form.endereco, form.vinicola, uuid4)
       Alert.alert("Dados Registrados com Sucesso")
+      setForm({})
       navigation.replace("Adega")
     } catch (error) {
       Alert.alert("Erro ao registrar vinho", error)

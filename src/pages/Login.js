@@ -6,7 +6,7 @@ import CaixaText from "../components/CaixaText";
 
 import * as loginService from '../services/LoginService';
 import * as userService from '../services/UsuarioService';
-import * as UserAction from '../services/actions/user.action';
+import * as UserAction from '../services/actions/UserAction';
 import { useSelector, useDispatch } from 'react-redux';
 
 const backgroundimg = "../images/fundo.png";

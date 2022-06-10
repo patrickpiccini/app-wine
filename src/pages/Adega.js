@@ -3,8 +3,7 @@ import { Button } from 'react-native-paper';
 import React, { useLayoutEffect ,useState, useEffect} from 'react'
 import * as wineService from '../services/VinhoService'
 import BoxVinho from '../components/BoxVinho';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 
 const backgroundimg = "../images/fundo.png";
 const logo = "../images/logo.png";
@@ -19,7 +18,7 @@ export default function Adega(props) {
     {/* ------VAI PARA TELA DE CADASTRO DE VINHO------- */}  
     const cadastroVinho = () => {
       try {
-        navigation.push("AddVinho")
+        navigation.push("CadastroVinho")
       } catch (error) {
         Alert.alert(error)
       }}
@@ -34,7 +33,6 @@ export default function Adega(props) {
     
       })
 
-
       getWineFunction()
     }, [])
 
@@ -45,7 +43,7 @@ export default function Adega(props) {
       setInfoVinho(dataWine)
     } catch (error) {
       Alert.alert(error)
-    }}
+    }};
 
   {/* ------HEADER DA FLATLIST------- */} 
     const getHeader = () => {
@@ -70,8 +68,7 @@ export default function Adega(props) {
       {/* ------LOGO PICCINI & PITT------- */}  
       return <Image source={require(logo)} style={styles.logo}/>
   };
-
-
+  console.log(infoVinho);
   return (
     <View style={styles.container}>
       {/* ------IMAGEM DE BACKGROUND------- */}   
