@@ -1,7 +1,6 @@
 import db from "../config/firebaseConnect"
 
-import { collection , getDoc, deleteDoc, doc , setDoc} from 'firebase/firestore'
-// import { searchByAddress } from "./LocationService"
+import {  getDoc, doc , setDoc} from 'firebase/firestore'
 
 
 export const createUser = (dados) => {

@@ -2,8 +2,8 @@ import { View, StyleSheet, ImageBackground, Alert,ScrollView} from 'react-native
 import { Button } from 'react-native-paper';
 import { useState } from "react";
 import { useSelector } from 'react-redux';
-import * as wineService from '../services/VinhoService'
-import * as coordService from '../services/MapsService'
+import * as wineService from '../database/VinhoService'
+import * as coordService from '../database/MapsService'
 import CaixaText from "../components/CaixaText";
 
 import uuid from 'react-native-uuid';

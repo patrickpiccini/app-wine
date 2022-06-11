@@ -1,8 +1,8 @@
 import { View, StyleSheet, ImageBackground, Dimensions,Alert } from 'react-native'
+import * as coordService from '../database/MapsService'
 import React, {  useState, useEffect } from 'react'
 import MapView, { Marker } from 'react-native-maps'
 import * as Location from "expo-location"
-import * as coordService from '../services/MapsService'
 
 
 const backgroundimg = "../images/fundo.png";
@@ -48,7 +48,6 @@ export default function Mapa(props) {
       try {
         setVinhoLocal([])
         let dados = await coordService.getCoordUnique(keyVinho)
-        console.log(dados);
         setVinhoLocal(dados)
       } catch (error) {
   

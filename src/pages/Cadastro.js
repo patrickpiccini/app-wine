@@ -1,9 +1,9 @@
 import { View, StyleSheet, ImageBackground, Alert,ScrollView} from 'react-native'
+import * as userService from '../database/UsuarioService'
+import * as loginService from '../services/LoginService'
+import CaixaText from "../components/CaixaText";
 import { Button } from 'react-native-paper';
 import { useState } from "react";
-import * as loginService from '../services/LoginService'
-import * as userService from '../services/UsuarioService'
-import CaixaText from "../components/CaixaText";
 
 const backgroundimg = "../images/fundo.png";
 

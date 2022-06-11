@@ -1,12 +1,12 @@
-import { useState, useLayoutEffect} from "react";
-import { Checkbox, Button } from 'react-native-paper';
 import { ImageBackground, StyleSheet,Text, View, Image,Alert,ScrollView} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { Checkbox, Button } from 'react-native-paper';
+import { useState, useLayoutEffect} from "react";
 import CaixaText from "../components/CaixaText";
 
-import * as loginService from '../services/LoginService';
-import * as userService from '../services/UsuarioService';
 import * as UserAction from '../services/actions/UserAction';
+import * as userService from '../database/UsuarioService';
+import * as loginService from '../services/LoginService';
 import { useSelector, useDispatch } from 'react-redux';
 
 const backgroundimg = "../images/fundo.png";

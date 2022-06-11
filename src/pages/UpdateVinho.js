@@ -1,7 +1,7 @@
 import { View, StyleSheet, ImageBackground, Alert,ScrollView} from 'react-native'
+import * as wineService from '../database/VinhoService'
 import { Button } from 'react-native-paper';
 import { useState } from "react";
-import * as wineService from '../services/VinhoService'
 
 import CaixaText from "../components/CaixaText";
 
@@ -18,7 +18,6 @@ export default function UpdateVinho(props) {
   {/* ------BTN FAZ O UPDATE DOS VINHOS------- */}  
   const UpdateBtn = async () => {
     try {
-      console.log(form);
       await wineService.updateWine(keyVinho, form)
 
       Alert.alert("Dados Registrados com Sucesso")

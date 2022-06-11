@@ -1,8 +1,7 @@
 import db from "../config/firebaseConnect"
-import { searchByAddress } from "./LocationService"
 
 import { collection, addDoc, getDocs, deleteDoc, doc, query, where } from 'firebase/firestore'
-// import { searchByAddress } from "./LocationService"
+import { searchByAddress } from "../services/LocationService"
 
 
 export const createWine = (dados, email, uuid4) => {

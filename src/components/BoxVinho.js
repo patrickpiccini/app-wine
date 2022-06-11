@@ -1,7 +1,7 @@
 import { View, Text ,StyleSheet, Image,Alert} from 'react-native';
 import React, { useLayoutEffect, useState } from 'react'
 import { Button } from 'react-native-paper';
-import * as wineService from '../services/VinhoService'
+import * as wineService from '../database/VinhoService'
 
 
 const vinho = "../images/vinhoimg.png";

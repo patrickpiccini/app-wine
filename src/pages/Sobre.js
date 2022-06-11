@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ImageBackground, Image} from 'react-native'
-import { Button } from 'react-native-paper';
 import React, { useLayoutEffect } from 'react'
+import { Button } from 'react-native-paper';
 
 const backgroundimg = "../images/fundo.png";
 const logo = "../images/logo.png";

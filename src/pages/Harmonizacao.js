@@ -1,68 +1,76 @@
-import { View, Text, StyleSheet, ImageBackground, Image} from 'react-native'
-import { Button } from 'react-native-paper';
-import React, { useLayoutEffect } from 'react'
+import { View, Text, StyleSheet, ImageBackground, Alert, FlatList, VirtualizedList} from 'react-native'
+import * as hermonizacaoService from '../database/HarmonizacaoService'
+import React, { useLayoutEffect ,useState, useEffect} from 'react'
+import HarmonizacaoComponent from '../components/HarmonizacaoComponent';
+
+
 
 const backgroundimg = "../images/fundo.png";
-const logo = "../images/logo.png";
+
 
 export default function Harmonizacao(props) {
 
-    const navigation = props.navigati
-
-  
-    return (
-    <View style={styles.container}>
-      {/* ------IMAGEM DE BACKGROUND------- */}   
-    <ImageBackground source={require(backgroundimg)} resizeMode="cover" style={styles.image}>
-
-    <View style={styles.columnBox}>
-
-        {/* ------LOGO PICCINI & PITT------- */}  
-        <Image source={require(logo)} style={styles.logo}/>
-
-        <View style={{alignItems:'center', justifyContent:'center', marginTop:15}}>
-            
-            {/* ------DESENVOLVEDORES------- */}
-            <Text style={{fontSize:22,color:'white',fontWeight:'bold'}}>
-                Titúlo
-            </Text>
-            <Text style={{fontSize:20,color:'white', textAlign:'center'}}>
-                Informações
-            </Text>
-
-        </View>
-
-    </View>
+    const [infoHarmoniza, setInfoHarmoniza] = useState()
     
+    useLayoutEffect(() => {
+
+      getHarmonizacaoFunction()
+
+    }, [])
+    
+
+    {/* ------SELECT DE TODOS AS HARMONIZAÇÕES------- */}  
+    const getHarmonizacaoFunction = async () =>{
+      try{
+      let dataWine = await hermonizacaoService.getHermonizacao()
+      setInfoHarmoniza(dataWine)
+    } catch (error) {
+      Alert.alert(error)
+    }};
+
+  return (
+    <View style={styles.container}>
+      {/* ------IMAGEM DE BACKGROUND-------    */}
+    <ImageBackground source={require(backgroundimg)} resizeMode="cover" style={styles.image}>
+    <View style={styles.columnBox}>
+    <View style={{marginTop:25}}>
+
+        {/* ------MODELO DE BOX DE VINHOS------- */}
+          <FlatList
+              data={infoHarmoniza}
+              renderItem={ ({item}) => {
+                return <HarmonizacaoComponent
+                dados={item}
+                />
+                
+              }}
+              keyExtractor={item => item.key}
+              />
+  
+        </View>
+      </View>
     </ImageBackground>
     </View>
   )
 }
 
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-      },
-      image: {
-        flex: 1,
-      },
-      logo:{
-        width: 200,
-        height:100,
-        justifyContent: 'center',
-        alignContent: "center"
-      },
-      columnBox:{
-        marginTop: 40,
-        marginHorizontal:30,
-        flexDirection: "column",
-        alignItems: 'center',
-      },
-      linha:{
-        marginTop: 40,
-        marginHorizontal:30,
-        flexDirection: "row",
-        alignItems: 'center',
-      }
-  });
-  
+  container: {
+      flex: 1,
+      
+    },
+    image: {
+      flex: 1,
+    },
+    columnBox:{
+      marginHorizontal:30,
+      
+      flexDirection: "column",
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+
+
+
+});

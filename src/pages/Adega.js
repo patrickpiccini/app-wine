@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, ImageBackground, Image,ScrollView, Alert, FlatList} from 'react-native'
-import { Button } from 'react-native-paper';
+import { View, Text, StyleSheet, ImageBackground, Image, Alert, FlatList} from 'react-native'
 import React, { useLayoutEffect ,useState, useEffect} from 'react'
-import * as wineService from '../services/VinhoService'
+import * as wineService from '../database/VinhoService'
 import BoxVinho from '../components/BoxVinho';
+import { Button } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 
 const backgroundimg = "../images/fundo.png";
@@ -68,7 +68,6 @@ export default function Adega(props) {
       {/* ------LOGO PICCINI & PITT------- */}  
       return <Image source={require(logo)} style={styles.logo}/>
   };
-  console.log(infoVinho);
   return (
     <View style={styles.container}>
       {/* ------IMAGEM DE BACKGROUND------- */}   

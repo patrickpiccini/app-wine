@@ -111,7 +111,7 @@ function App() {
         name="CadastroVinho" 
         component={CadastroVinho} 
         options={{
-          title:"Cadstro Vinho",
+          title:"Cadastro Vinho",
           headerTitleAlign:'center'
         }}
         />   
@@ -120,7 +120,7 @@ function App() {
         name="UpdateVinho" 
         component={UpdateVinho} 
         options={{
-          title:"Atualzar Vinho",
+          title:"Atualizar Vinho",
           headerTitleAlign:'center'
         }}
         />  

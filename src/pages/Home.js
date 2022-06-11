@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Alert, ImageBackground,ScrollView,Image,TouchableOpacity } from 'react-native'
 import React, { useLayoutEffect, useState, useEffect } from 'react'
-import { Button } from 'react-native-paper';
 import * as loginService from '../services/LoginService'
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from 'react-native-paper';
 
 export default function Home(props) {
 

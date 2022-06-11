@@ -1,8 +1,7 @@
 import db from "../config/firebaseConnect"
 
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore'
-import { searchByAddress } from "./LocationService"
-
+import { searchByAddress } from "../services/LocationService"
 
 export const createCoord = (endereco, vinicola, uuid4) => {
     return new Promise(async (resolve, reject) => {
@@ -33,7 +32,6 @@ export const getCoordUnique = (uudi4) => {
             const colecao = collection(db, "location")
             const q = query(colecao, where("uuid4", "==", uudi4))
             const querySnapshot = await getDocs(q)
-            console.log(querySnapshot);
             let registros = []
             querySnapshot.forEach((item) => {
                 let data = item.data()
