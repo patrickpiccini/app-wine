@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet, ImageBackground, Alert, FlatList, VirtualizedList} from 'react-native'
-import * as hermonizacaoService from '../database/HarmonizacaoService'
-import React, { useLayoutEffect ,useState, useEffect} from 'react'
 import HarmonizacaoComponent from '../components/HarmonizacaoComponent';
-
+import * as hermonizacaoService from '../database/HarmonizacaoService';
+import React, { useLayoutEffect ,useState, useEffect} from 'react';
 
 
 const backgroundimg = "../images/fundo.png";
