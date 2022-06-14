@@ -53,16 +53,6 @@ export default function Mapa(props) {
   
       }
     }
-
-    const focustPoint = () =>{
-      if(keyVinho){
-        initialRegion={
-          latitude: lat,
-          longitude: lng,
-          latitudeDelta: 0.10,
-          longitudeDelta: 0.10,
-        }}    
-  }
     
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import db from "../config/firebaseConnect"
 
-import { collection, addDoc, getDocs, deleteDoc, doc, query, where } from 'firebase/firestore'
+import { collection, addDoc, getDocs, deleteDoc, doc, query, where,updateDoc } from 'firebase/firestore'
 import { searchByAddress } from "../services/LocationService"
 
 
@@ -25,16 +25,22 @@ export const createWine = (dados, email, uuid4) => {
 export const updateWine = (key, data) => {
 
     return new Promise(async (resolve, reject) => {
+        var coordenadas = await searchByAddress(data.endereco)
+        let lat = coordenadas.lat
+        let lng = coordenadas.lng
         try {
-            const docRef = await collection(db, 'vinho' + "/" + key)
-            const querySnapshot = await docRef.update({
+            const dataUptade ={
                 'ano':data.ano,
                 'endereco':data.endereco,
                 'nome_vinho':data.nome_vinho,
                 'uva':data.uva,
                 'vinicola':data.vinicola,
-            })
-            resolve(querySnapshot.data())
+                'lat':lat,
+                'lng':lng
+            }
+            const docRef = await updateDoc(doc(db, 'vinho', key) ,dataUptade)
+        
+            resolve(docRef)
         } catch (error) {
             console.log("Erro:", error)
             reject()

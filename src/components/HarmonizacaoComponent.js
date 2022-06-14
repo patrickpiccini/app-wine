@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity, } from 'react-native'
 import React, { useLayoutEffect, useState } from 'react'
-import { Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function HarmonizacaoComponent(props) {

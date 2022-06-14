@@ -3,7 +3,6 @@ import React, { useLayoutEffect, useState } from 'react'
 import { Button } from 'react-native-paper';
 import * as wineService from '../database/VinhoService'
 
-
 const vinho = "../images/vinhoimg.png";
 
 export default function BoxVinho(props) {
@@ -57,6 +56,14 @@ export default function BoxVinho(props) {
       Alert.alert(error)
     }}
 
+  const AtualizarVinhoTela = () => {
+      try {
+        navigation.push("UpdateVinho",{'key':key,'uuid4':uuid4})
+        props.getWineFunction()
+      } catch (error) {
+        Alert.alert(error)
+      }}
+
 
   return (
     <View style={{backgroundColor:'#8A0B14', flexDirection: 'row' ,width:300,height:175,marginBottom:25, borderRadius:25}}>
@@ -103,6 +110,12 @@ export default function BoxVinho(props) {
       </Button>
       </View>
 
+    <View style={{flex:1, alignItems: 'center',justifyContent: 'center',}}>
+      <Button  labelStyle={{color: 'white', fontSize:25 }}
+        icon="pencil"
+        onPress={AtualizarVinhoTela}>
+      </Button>
+      </View>
 
     <View style={{flex:1, alignItems: 'center',justifyContent: 'center',}}>
       <Button  labelStyle={{color: 'white', fontSize:25 }}

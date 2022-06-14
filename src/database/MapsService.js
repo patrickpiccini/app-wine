@@ -1,6 +1,6 @@
 import db from "../config/firebaseConnect"
 
-import { collection, addDoc, getDocs, query, where } from 'firebase/firestore'
+import { collection, addDoc, getDocs, query, where ,updateDoc,doc} from 'firebase/firestore'
 import { searchByAddress } from "../services/LocationService"
 
 export const createCoord = (endereco, vinicola, uuid4) => {
@@ -23,6 +23,32 @@ export const createCoord = (endereco, vinicola, uuid4) => {
         }
     })
 }
+
+
+
+export const updateCoord = (uuid4, data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const dataresponse = await getCoordUnique(uuid4)
+            console.log(data);
+            var coordenadas = await searchByAddress(data.endereco)
+            let lat = coordenadas.lat
+            let lng = coordenadas.lng
+            const dados = {
+                "lat":lat,
+                "lng":lng,
+                "endereco":data.endereco,
+                "vinicola":data.vinicola
+            }
+            const docRef = await updateDoc(doc(db, 'location', dataresponse[0].id) ,dados)
+
+            resolve(docRef)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 
 
