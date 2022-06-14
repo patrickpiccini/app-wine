@@ -65,7 +65,6 @@ const styles = StyleSheet.create({
     },
     columnBox:{
       marginHorizontal:30,
-      
       flexDirection: "column",
       alignItems: 'center',
       justifyContent: 'center'

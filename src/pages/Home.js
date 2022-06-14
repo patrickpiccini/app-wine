@@ -68,14 +68,8 @@ export default function Home(props) {
         <View style={styles.column}>
           {/* ------IMAGEM DO USUSARIO------- */}   
           <View style={styles.linha}>
-            <Image
-            style={styles.imgLogo}
-            source={{
-              uri: 'https://reactnative.dev/img/tiny_logo.png',
-            }}
-            />
           {/* ------TEXTO BEM VINDO------- */}   
-            <View style={{flex:1, alignItems:'flex-end'}}>
+            <View style={{flex:1, alignItems:'center'}}>
               <Text style={styles.txtLogo}>
                 Bem Vindo!
               </Text>

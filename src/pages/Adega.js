@@ -52,14 +52,6 @@ export default function Adega(props) {
       <Text style={{fontSize:20, fontWeight:'bold',color:'white'}}>{userInfo.nome_completo}</Text>
       <Text style={{color:'white'}}>{userInfo.cidade}</Text>
       </View>
-
-    <Image
-          style={styles.imgLogo}
-          source={{
-            uri: 'https://reactnative.dev/img/tiny_logo.png',
-          }}
-          />
-
     </View>
   };
 

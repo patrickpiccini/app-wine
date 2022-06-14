@@ -12,7 +12,6 @@ import Harmonizacao from './src/pages/Harmonizacao';
 import Mapa from './src/pages/Mapa';
 import Sobre from './src/pages/Sobre';
 import Faq from './src/pages/Faq';
-import UpdateVinho from './src/pages/UpdateVinho';
 import CadastroVinho from './src/pages/CadastroVinho';
 import store from './src/services/StoreService'
 
@@ -115,15 +114,6 @@ function App() {
           headerTitleAlign:'center'
         }}
         />   
-
-        <Stack.Screen 
-        name="UpdateVinho" 
-        component={UpdateVinho} 
-        options={{
-          title:"Atualizar Vinho",
-          headerTitleAlign:'center'
-        }}
-        />  
 
 
 
