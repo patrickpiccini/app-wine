@@ -25,7 +25,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "patricka.app"
+      "package": "patricka.app",
+      "config":{
+        "googleMaps":{
+          "apiKey":"AIzaSyCSuUygR7xBw5B1IBe4CCw44YnFKzfEfjA"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
