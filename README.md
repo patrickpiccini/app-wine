@@ -27,7 +27,7 @@ Apresenta a marca Piccini & Pitt Wine
 
 ## 📝 **Tela de cadastro/login:**
 
-<img src="https://github.com/patrickpiccini/app-wine/blob/main/images-doc/img1.jpeg" alt="drawing" width="250"/> <img src="https://github.com/patrickpiccini/app-wine/blob/main/images-doc/img2.jpeg" alt="drawing" width="250"/>
+<img src="https://github.com/patrickpiccini/app-wine/blob/main/images-doc/img2.jpeg" alt="drawing" width="250"/> <img src="https://github.com/patrickpiccini/app-wine/blob/main/images-doc/img1.jpeg" alt="drawing" width="250"/>
 
 Nesta tela o usuário poderá executar o login através do e-mail e senha cadastrados anteriormente. Também poderá deixar o lembre-me ativado para que os dados sejam armazenados para futuro acesso.
 
@@ -84,7 +84,7 @@ Caso não haja nenhum cadastro a tela mostrara apenas o nome do usuário, cidade
 
 ## 🧀 **Tela Harmonização:**
 
-<img src="https://github.com/patrickpiccini/app-wine/blob/main/images-doc/img6.jpeg" alt="drawing" width="250"/>
+<img src="https://github.com/patrickpiccini/app-wine/blob/main/images-doc/img7.jpeg" alt="drawing" width="250"/>
 
 Na tela de harmonização, o usuário encontrará uma série de uvas pré-selecionadas com os principais pratos indicados para acompanhar a degustação do vinho escolhido. Esta tela não é editável.
 
